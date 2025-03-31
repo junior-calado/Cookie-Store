@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookies by Maria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mr+Dafoe&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/CSS/style.css">
+</head>
+<body>
+    <header>
+        <h1>Cookies by <a href="https://www.instagram.com/maria_cl.13/" target="_blank" class="maria-link">Maria</a></h1>
+        <div class="cart-button">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">0</span>
+        </div>
+    </header>
+
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <h2>Seu Carrinho</h2>
+            <div class="cart-items" id="cartItems">
+            </div>
+            <div class="cart-total">
+                <span>Total: R$ <span id="cartTotal">0,00</span></span>
+            </div>
+            <div class="cart-buttons">
+                <button class="close-cart">Fechar</button>
+                <button class="checkout-btn">Finalizar Pedido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Imagem -->
+    <div class="image-modal" id="imageModal">
+        <span class="close-image">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <section class="introducao">
+        <p>Bem-vindo à nossa loja de cookies caseiros! Aqui você encontra os melhores sabores, feitos com carinho e ingredientes frescos.</p>
+    </section>
+
+    <section class="filtros">
+        <button class="filtro-btn ativo" data-categoria="todos">Todos</button>
+        <button class="filtro-btn" data-categoria="simples">Simples</button>
+        <button class="filtro-btn" data-categoria="recheados">Recheados</button>
+        <button class="filtro-btn" data-categoria="combo">Combo</button>
+    </section>
+
+    <section class="catalogo">
+        <div class="item" data-categoria="simples">
+            <img src="./assets/IMG/cookie_chocolate_branco.jpg" alt="Cookie Tradicional" class="imagem" onclick="openImageModal(this.src)">
+            <div class="texto">
+                <h2>Cookie Tradicional</h2>
+                <p>Delicioso cookie tradicional com gotas de chocolate. O clássico que todo mundo ama.</p>
+                <span>R$ 8,00</span>
+                <button class="add-to-cart" data-name="Cookie Tradicional" data-price="8.00">Adicionar ao Carrinho</button>
+            </div>
+        </div>
+
+        <div class="item" data-categoria="simples">
+            <img src="./assets/IMG/cookie_chocolate_branco.jpg" alt="Cookie de Chocolate" class="imagem" onclick="openImageModal(this.src)">
+            <div class="texto">
+                <h2>Cookie de Chocolate</h2>
+                <p>Cookie feito com massa de chocolate, um clássico diferenciado.</p>
+                <span>R$ 8,00</span>
+                <button class="add-to-cart" data-name="Cookie de Chocolate" data-price="8.00">Adicionar ao Carrinho</button>
+            </div>
+        </div>
+
+        <div class="item" data-categoria="simples">
+            <img src="./assets/IMG/cookie_chocolate_branco.jpg" alt="Cookie de Chocolate branco" class="imagem" onclick="openImageModal(this.src)">
+            <div class="texto">
+                <h2>Cookie de Chocolate branco</h2>
+                <p>Nosso clássico só que com um delicioso chocolate branco.</p>
+                <span>R$ 8,00</span>
+                <button class="add-to-cart" data-name="Cookie de Chocolate branco" data-price="8.00">Adicionar ao Carrinho</button>
+            </div>
+        </div>
+
+        <div class="item" data-categoria="simples">
+            <img src="./assets/IMG/cookie_chocolate_branco.jpg" alt="Cookie de Chocolate com gotas de chocolate branco" class="imagem" onclick="openImageModal(this.src)">
+            <div class="texto">
+                <h2>Cookie de Chocolate com gotas de chocolate branco</h2>
+                <p>Um cookie com a nossa massa de chocolate e gotas de chocolate branco.</p>
+                <span>R$ 8,00</span>
+                <button class="add-to-cart" data-name="Cookie de Chocolate com gotas de chocolate branco" data-price="8.00">Adicionar ao Carrinho</button>
+            </div>
+        </div>
+
+        <div class="item" data-categoria="recheados">
+            <img src="./assets/IMG/cookie_chocolate_branco.jpg" alt="Cookie com Nutella" class="imagem" onclick="openImageModal(this.src)">
+            <div class="texto">
+                <h2>Cookie Tradicional com Nutella</h2>
+                <p>Um cookie com a nossa massa tradicional e um delicioso recheio de nutella.</p>
+                <span>R$ 12,00</span>
+                <button class="add-to-cart" data-name="Cookie com Nutella" data-price="12.00">Adicionar ao Carrinho</button>
+            </div>            
+        </div>
+
+        <div class="item" data-categoria="recheados">
+            <img src="./assets/IMG/cookie_chocolate_branco.jpg" alt="Cookie com ovomaltine" class="imagem" onclick="openImageModal(this.src)">
+            <div class="texto">
+                <h2>Cookie Tradicional com ovomaltine</h2>
+                <p>Um cookie com a nossa massa tradicional e um delicioso recheio de ovomaltine crocante.</p>
+                <span>R$ 12,00</span>
+                <button class="add-to-cart" data-name="Cookie com ovomaltine" data-price="12.00">Adicionar ao Carrinho</button>
+            </div>
+        </div>
+
+        <div class="item" data-categoria="recheados">
+            <img src="./assets/IMG/cookie_chocolate_branco.jpg" alt="Cookie de doce de leite" class="imagem" onclick="openImageModal(this.src)">
+            <div class="texto">
+                <h2>Cookie de chocolate com doce de leite</h2>
+                <p>Um cookie diferenciado com a nossa massa de chocolate e um delicioso recheio de doce de leite.</p>
+                <span>R$ 12,00</span>
+                <button class="add-to-cart" data-name="Cookie de doce de leite" data-price="12.00">Adicionar ao Carrinho</button>
+            </div>
+        </div>
+
+        <div class="item" data-categoria="recheados">
+            <img src="./assets/IMG/cookie_chocolate_branco.jpg" alt="Cookie com creme de oreo" class="imagem" onclick="openImageModal(this.src)">
+            <div class="texto">
+                <h2>Cookie Tradicional com creme de oreo</h2>
+                <p>Um cookie com a nossa massa tradicional, com chocolate branco e um delicioso recheio de creme de oreo.</p>
+                <span>R$ 12,00</span>
+                <button class="add-to-cart" data-name="Cookie com creme de oreo" data-price="12.00">Adicionar ao Carrinho</button>
+            </div>
+        </div>
+
+        <div class="item" data-categoria="combo">
+            <img src="./assets/IMG/cookie_chocolate_branco.jpg" alt="Cookie combo" class="imagem" onclick="openImageModal(this.src)">
+            <div class="texto">
+                <h2>Combinho - 4 cookies simples(médios)</h2>
+                <p>4 cookies simples do tamanho médio de sabores variados.</p>
+                <span>R$ 15,00</span>
+                <button class="add-to-cart" data-name="Cookie combo" data-price="15.00">Adicionar ao Carrinho</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="pedido">
+        <button id="whatsappButton" class="botao-whatsapp">Fazer Pedido</button>
+    </section>
+
+    <footer class="footer">
+        <p>Feito com ❤️ igual os nossos cookies 🍪</p>
+    </footer>
+
+    <script src="./assets/JS/script.js"></script>
+</body>
+</html>
