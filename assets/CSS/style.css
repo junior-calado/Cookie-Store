@@ -571,9 +571,10 @@ header h1 {
     }
 
     .cart-button {
-        top: auto;
-        bottom: 20px;
+        position: fixed;
+        bottom: 80px;
         right: 20px;
+        top: auto;
         width: 60px;
         height: 60px;
         padding: 0;
@@ -581,6 +582,7 @@ header h1 {
         justify-content: center;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         background-color: #4CAF50;
+        z-index: 1000;
     }
 
     .cart-button i {
@@ -606,13 +608,45 @@ header h1 {
         border: 2px solid white;
     }
 
-    .cart-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    .cart-content {
+        width: 95%;
+        max-width: 95%;
+        margin: 0;
+        box-sizing: border-box;
+        overflow: hidden;
     }
 
-    .cart-button:active {
-        transform: translateY(1px);
+    .cart-content h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 12px;
+    }
+
+    .quantity-controls {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .cart-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .continue-shopping,
+    .checkout-btn {
+        width: 100%;
+        padding: 10px 20px;
+    }
+
+    .cart-total {
+        font-size: 1.2em;
+        margin: 20px 0;
     }
 
     .introducao {
@@ -627,23 +661,18 @@ header h1 {
         gap: 40px;
         width: 100%;
         padding: 20px 15px;
+        box-sizing: border-box;
     }
 
     .item {
         padding: 20px;
         gap: 20px;
-    }
-
-    .invertido {
-        flex-direction: column;
+        min-height: auto;
     }
 
     .imagem {
         width: 180px;
         height: 180px;
-    }
-
-    .invertido .imagem {
         margin: 0 auto;
     }
 
@@ -693,14 +722,6 @@ header h1 {
         padding: 15px 30px;
         font-size: 1.1em;
     }
-
-    .cart-content {
-        width: 95%;
-        max-width: 95%;
-        margin: 0;
-        box-sizing: border-box;
-        overflow: hidden;
-    }
 }
 
 @media screen and (max-width: 480px) {
@@ -713,7 +734,7 @@ header h1 {
     }
 
     .cart-button {
-        bottom: 15px;
+        bottom: 70px;
         right: 15px;
         width: 55px;
         height: 55px;
@@ -721,6 +742,34 @@ header h1 {
 
     .cart-button i {
         font-size: 22px;
+    }
+
+    .cart-content {
+        padding: 15px;
+    }
+
+    .cart-content h2 {
+        font-size: 1.3em;
+    }
+
+    .cart-item {
+        padding: 10px;
+    }
+
+    .item-name {
+        font-size: 1em;
+    }
+
+    .item-price {
+        font-size: 1em;
+    }
+
+    .quantity {
+        font-size: 1em;
+    }
+
+    .cart-total {
+        font-size: 1.1em;
     }
 
     .introducao {
@@ -740,10 +789,6 @@ header h1 {
     .imagem {
         width: 160px;
         height: 160px;
-    }
-
-    .invertido .imagem {
-        margin: 0 auto;
     }
 
     .texto h2 {
@@ -774,14 +819,6 @@ header h1 {
         padding: 12px 25px;
         font-size: 1em;
     }
-
-    .cart-content {
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        box-sizing: border-box;
-        overflow: hidden;
-    }
 }
 
 @media screen and (max-width: 320px) {
@@ -790,7 +827,7 @@ header h1 {
     }
 
     .cart-button {
-        bottom: 10px;
+        bottom: 60px;
         right: 10px;
         width: 50px;
         height: 50px;
@@ -798,6 +835,34 @@ header h1 {
 
     .cart-button i {
         font-size: 20px;
+    }
+
+    .cart-content {
+        padding: 12px;
+    }
+
+    .cart-content h2 {
+        font-size: 1.2em;
+    }
+
+    .cart-item {
+        padding: 8px;
+    }
+
+    .item-name {
+        font-size: 0.95em;
+    }
+
+    .item-price {
+        font-size: 0.95em;
+    }
+
+    .quantity {
+        font-size: 0.95em;
+    }
+
+    .cart-total {
+        font-size: 1em;
     }
 
     .catalogo {
@@ -812,10 +877,6 @@ header h1 {
     .imagem {
         width: 140px;
         height: 140px;
-    }
-
-    .invertido .imagem {
-        margin: 0 auto;
     }
 
     .texto h2 {
@@ -844,14 +905,6 @@ header h1 {
     .botao-whatsapp {
         padding: 10px 20px;
         font-size: 0.9em;
-    }
-
-    .cart-content {
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        box-sizing: border-box;
-        overflow: hidden;
     }
 }
 

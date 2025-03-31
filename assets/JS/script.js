@@ -60,11 +60,9 @@ function addToCart(name, price) {
     updateCartCount();
     updateCartItems();
     updateCartTotal();
-
-    if (isFirstItem) {
-        cartModal.style.display = 'block';
-        isFirstItem = false;
-    }
+    
+    const cartModal = document.getElementById('cartModal');
+    cartModal.style.display = 'block';
 }
 
 function updateQuantity(index, change) {
