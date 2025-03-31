@@ -1,51 +1,94 @@
 let cart = [];
+let isFirstItem = true;
 
 const cartButton = document.querySelector('.cart-button');
 const cartModal = document.getElementById('cartModal');
 const cartItems = document.getElementById('cartItems');
 const cartTotal = document.getElementById('cartTotal');
-const closeCartButton = document.querySelector('.close-cart');
+const continueShoppingButton = document.querySelector('.continue-shopping');
 const checkoutButton = document.querySelector('.checkout-btn');
 const cartCount = document.querySelector('.cart-count');
 const whatsappButton = document.getElementById('whatsappButton');
 
-// Modal de Imagem
 const imageModal = document.getElementById('imageModal');
 const modalImage = document.getElementById('modalImage');
 const closeImageBtn = document.querySelector('.close-image');
 
 function updateCartCount() {
-    cartCount.textContent = cart.length;
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCount.textContent = totalItems;
 }
 
-function updateCartDisplay() {
+function updateCartItems() {
     cartItems.innerHTML = '';
-    let total = 0;
 
     cart.forEach((item, index) => {
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
         cartItem.innerHTML = `
-            <span>${item.name} - R$ ${item.price}</span>
-            <button onclick="removeFromCart(${index})">Remover</button>
+            <div class="cart-item-info">
+                <span class="item-name">${item.name}</span>
+                <span class="item-price">R$ ${item.price}</span>
+            </div>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus" onclick="updateQuantity(${index}, -1)">-</button>
+                <span class="quantity">${item.quantity}</span>
+                <button class="quantity-btn plus" onclick="updateQuantity(${index}, 1)">+</button>
+            </div>
+            <button class="remove-item" onclick="removeFromCart(${index})">
+                <i class="fas fa-trash"></i>
+            </button>
         `;
         cartItems.appendChild(cartItem);
-        total += parseFloat(item.price);
     });
+}
 
+function updateCartTotal() {
+    const total = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
     cartTotal.textContent = total.toFixed(2);
 }
 
 function addToCart(name, price) {
-    cart.push({ name, price });
+    const existingItem = cart.find(item => item.name === name);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({ name, price, quantity: 1 });
+    }
+    
     updateCartCount();
-    updateCartDisplay();
+    updateCartItems();
+    updateCartTotal();
+
+    if (isFirstItem) {
+        cartModal.style.display = 'block';
+        isFirstItem = false;
+    }
+}
+
+function updateQuantity(index, change) {
+    const item = cart[index];
+    item.quantity += change;
+    
+    if (item.quantity <= 0) {
+        removeFromCart(index);
+    } else {
+        updateCartCount();
+        updateCartItems();
+        updateCartTotal();
+    }
 }
 
 function removeFromCart(index) {
     cart.splice(index, 1);
     updateCartCount();
-    updateCartDisplay();
+    updateCartItems();
+    updateCartTotal();
+
+    if (cart.length === 0) {
+        isFirstItem = true;
+    }
 }
 
 function sendWhatsAppMessage(message) {
@@ -58,7 +101,7 @@ cartButton.addEventListener('click', () => {
     cartModal.style.display = 'block';
 });
 
-closeCartButton.addEventListener('click', () => {
+continueShoppingButton.addEventListener('click', () => {
     cartModal.style.display = 'none';
 });
 
@@ -78,47 +121,53 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
 
 checkoutButton.addEventListener('click', () => {
     if (cart.length === 0) {
-        alert('Seu carrinho está vazio!');
+        const message = 'Olá! Gostaria de fazer um pedido de cookies. Poderia me ajudar?';
+        sendWhatsAppMessage(message);
         return;
     }
 
     let message = 'Olá! Gostaria de fazer um pedido:\n\n';
-    let total = 0;
-
     cart.forEach(item => {
-        message += `${item.name} - R$ ${item.price}\n`;
-        total += parseFloat(item.price);
+        message += `${item.name} x${item.quantity} - R$ ${(parseFloat(item.price) * item.quantity).toFixed(2)}\n`;
     });
-
-    message += `\nTotal: R$ ${total.toFixed(2)}`;
+    message += `\nTotal: R$ ${cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0).toFixed(2)}`;
 
     sendWhatsAppMessage(message);
 
     cart = [];
     updateCartCount();
-    updateCartDisplay();
+    updateCartItems();
+    updateCartTotal();
     cartModal.style.display = 'none';
 });
 
 whatsappButton.addEventListener('click', () => {
-    const message = 'Olá! Gostaria de fazer um pedido de cookies. Poderia me ajudar?';
+    if (cart.length === 0) {
+        const message = 'Olá! Gostaria de fazer um pedido de cookies. Poderia me ajudar?';
+        sendWhatsAppMessage(message);
+        return;
+    }
+
+    let message = 'Olá! Gostaria de fazer um pedido:\n\n';
+    cart.forEach(item => {
+        message += `${item.name} x${item.quantity} - R$ ${(parseFloat(item.price) * item.quantity).toFixed(2)}\n`;
+    });
+    message += `\nTotal: R$ ${cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0).toFixed(2)}`;
+
     sendWhatsAppMessage(message);
 });
 
-// Função para abrir o modal
 function openImageModal(imageSrc) {
     modalImage.src = imageSrc;
     imageModal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
 
-// Função para fechar o modal
 function closeImageModal() {
     imageModal.style.display = 'none';
     document.body.style.overflow = 'auto';
 }
 
-// Event listeners para fechar o modal
 closeImageBtn.addEventListener('click', closeImageModal);
 imageModal.addEventListener('click', (e) => {
     if (e.target === imageModal) {
@@ -126,23 +175,19 @@ imageModal.addEventListener('click', (e) => {
     }
 });
 
-// Fechar modal com tecla ESC
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && imageModal.style.display === 'flex') {
         closeImageModal();
     }
 });
 
-// Funcionalidade dos Filtros
 document.addEventListener('DOMContentLoaded', function() {
     const filtroBtns = document.querySelectorAll('.filtro-btn');
     const items = document.querySelectorAll('.item');
 
     filtroBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Remove a classe ativo de todos os botões
             filtroBtns.forEach(b => b.classList.remove('ativo'));
-            // Adiciona a classe ativo ao botão clicado
             btn.classList.add('ativo');
 
             const categoria = btn.getAttribute('data-categoria');
