@@ -31,13 +31,16 @@ function updateCartItems() {
                 <span class="item-price">R$ ${item.price}</span>
             </div>
             <div class="quantity-controls">
-                <button class="quantity-btn minus" onclick="updateQuantity(${index}, -1)">-</button>
-                <span class="quantity">${item.quantity}</span>
-                <button class="quantity-btn plus" onclick="updateQuantity(${index}, 1)">+</button>
+                <div class="quantity-buttons">
+                    <button class="quantity-btn minus" onclick="updateQuantity(${index}, -1)">-</button>
+                    <span class="quantity">${item.quantity}</span>
+                    <button class="quantity-btn plus" onclick="updateQuantity(${index}, 1)">+</button>
+                </div>
+                <button class="remove-item" onclick="removeFromCart(${index})">
+                    <i class="fas fa-trash"></i>
+                    Remover
+                </button>
             </div>
-            <button class="remove-item" onclick="removeFromCart(${index})">
-                <i class="fas fa-trash"></i>
-            </button>
         `;
         cartItems.appendChild(cartItem);
     });
@@ -95,17 +98,32 @@ function sendWhatsAppMessage(message) {
     window.open(whatsappUrl, '_blank');
 }
 
-cartButton.addEventListener('click', () => {
+function openCart() {
     cartModal.style.display = 'block';
-});
+    document.body.classList.add('cart-open');
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.top = `-${window.scrollY}px`;
+}
 
-continueShoppingButton.addEventListener('click', () => {
+function closeCart() {
     cartModal.style.display = 'none';
-});
+    document.body.classList.remove('cart-open');
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
+    document.body.style.top = '';
+    window.scrollTo(0, parseInt(document.body.style.top || '0') * -1);
+}
+
+cartButton.addEventListener('click', openCart);
+
+continueShoppingButton.addEventListener('click', closeCart);
 
 window.addEventListener('click', (e) => {
     if (e.target === cartModal) {
-        cartModal.style.display = 'none';
+        closeCart();
     }
 });
 
@@ -136,7 +154,7 @@ checkoutButton.addEventListener('click', () => {
     updateCartCount();
     updateCartItems();
     updateCartTotal();
-    cartModal.style.display = 'none';
+    closeCart();
 });
 
 whatsappButton.addEventListener('click', () => {
