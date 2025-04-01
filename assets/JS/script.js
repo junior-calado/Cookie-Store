@@ -93,7 +93,7 @@ function removeFromCart(index) {
 }
 
 function sendWhatsAppMessage(message) {
-    const whatsappNumber = '5544998221669';
+    const whatsappNumber = '5544998846587';
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
 }
